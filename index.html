@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avícola Yamiless — Pedidos online</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --warm: #f5ede0;
+    --accent: #c0392b;
+    --accent-dark: #96281b;
+    --green: #2d6a4f;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --border: #e8e0d6;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+ 
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text); display: flex; align-items: center; gap: 10px; }
+  .nav-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .nav-badge { font-size: 11px; background: #eaf7ee; color: var(--green); padding: 4px 10px; border-radius: 99px; font-weight: 500; }
+ 
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; min-height: 480px;
+  }
+  .hero-left {
+    padding: 56px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--green); font-weight: 500;
+    text-transform: uppercase; letter-spacing: .08em;
+    margin-bottom: 20px;
+  }
+  .hero-tag::before { content: ''; width: 24px; height: 1.5px; background: var(--green); }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; line-height: 1.2;
+    color: var(--text); margin-bottom: 16px;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-sub { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 380px; margin-bottom: 28px; }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: #fff;
+    padding: 13px 24px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; text-decoration: none; border: none; cursor: pointer;
+    transition: background .2s;
+  }
+  .hero-cta:hover { background: var(--accent-dark); }
+  .hero-right {
+    background: var(--warm);
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 40px 36px; gap: 12px;
+  }
+  .hero-right-title { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--muted); margin-bottom: 4px; }
+ 
+  /* PRODUCTO CARDS */
+  .producto-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: border-color .2s;
+  }
+  .producto-card:hover { border-color: var(--accent); }
+  .prod-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .prod-unit { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .prod-price { font-size: 14px; font-weight: 500; color: var(--accent); }
+  .prod-badge { font-size: 10px; background: var(--warm); color: var(--muted); padding: 2px 7px; border-radius: 99px; margin-top: 4px; text-align: right; }
+ 
+  /* FEATURES */
+  .features-bar {
+    background: var(--text); padding: 20px 32px;
+    display: flex; gap: 0; align-items: stretch;
+  }
+  .feature {
+    flex: 1; padding: 0 28px;
+    border-right: 1px solid rgba(255,255,255,.1);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .feature:last-child { border-right: none; }
+  .feature-icon { font-size: 20px; margin-top: 2px; }
+  .feature-text p { color: #fff; font-size: 13px; font-weight: 500; }
+  .feature-text span { color: rgba(255,255,255,.5); font-size: 11px; }
+ 
+  /* MAIN LAYOUT */
+  .main { display: grid; grid-template-columns: 1fr 420px; gap: 0; }
+ 
+  /* CATALOG */
+  .catalog { padding: 40px 40px; border-right: 1px solid var(--border); }
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: 22px;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .section-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .catalog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cat-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px;
+    cursor: pointer; transition: all .2s;
+    position: relative;
+  }
+  .cat-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .cat-card.selected { border-color: var(--accent); border-width: 2px; background: #fdf5f5; }
+  .cat-emoji { font-size: 28px; margin-bottom: 10px; }
+  .cat-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .cat-price { font-size: 13px; color: var(--accent); margin-bottom: 6px; }
+  .cat-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .cat-type {
+    position: absolute; top: 12px; right: 12px;
+    font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em;
+    padding: 3px 7px; border-radius: 99px;
+  }
+  .type-mayor { background: #eaf7ee; color: var(--green); }
+  .type-menor { background: #fdecea; color: var(--accent); }
+  .type-ambos { background: #fff4e0; color: #854f0b; }
+ 
+  .how-section { margin-top: 36px; }
+  .how-steps { display: flex; flex-direction: column; gap: 0; margin-top: 16px; }
+  .how-step {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 14px 0; border-bottom: 1px solid var(--border);
+  }
+  .how-step:last-child { border-bottom: none; }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    font-size: 12px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .step-text p { font-size: 13px; font-weight: 500; color: var(--text); }
+  .step-text span { font-size: 12px; color: var(--muted); }
+ 
+  /* CHAT */
+  .chat-panel {
+    background: var(--white);
+    display: flex; flex-direction: column;
+    height: calc(100vh - 57px); position: sticky; top: 57px;
+    border-left: 1px solid var(--border);
+  }
+  .chat-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    background: var(--white);
+  }
+  .chat-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); display: flex; align-items: center; justify-content: center;
+    color: #fff; font-family: 'Playfair Display', serif; font-size: 16px;
+  }
+  .chat-info p { font-size: 14px; font-weight: 500; color: var(--text); }
+  .chat-info span { font-size: 11px; color: var(--green); display: flex; align-items: center; gap: 4px; }
+  .chat-info span::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 20px;
+    display: flex; flex-direction: column; gap: 12px;
+    scroll-behavior: smooth;
+  }
+  .bubble {
+    max-width: 85%; padding: 10px 14px;
+    font-size: 13px; line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .bubble.bot {
+    background: var(--warm); border: 1px solid var(--border);
+    border-radius: 4px 14px 14px 14px;
+    color: var(--text); align-self: flex-start;
+  }
+  .bubble.user {
+    background: var(--accent); color: #fff;
+    border-radius: 14px 4px 14px 14px;
+    align-self: flex-end;
+  }
+  .bubble.typing {
+    display: flex; gap: 5px; align-items: center;
+    padding: 14px; background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 4px 14px 14px 14px;
+    align-self: flex-start;
+  }
+  .tdot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--muted); animation: tdot 1.2s infinite;
+  }
+  .tdot:nth-child(2) { animation-delay: .2s; }
+  .tdot:nth-child(3) { animation-delay: .4s; }
+  @keyframes tdot { 0%,100%{opacity:.2;transform:scale(.8)} 50%{opacity:1;transform:scale(1)} }
+ 
+  .pedido-card {
+    background: var(--white); border: 1.5px solid var(--accent);
+    border-radius: 12px; padding: 14px; font-size: 12px;
+    align-self: flex-start; max-width: 90%;
+  }
+  .pedido-card-title {
+    font-family: 'Playfair Display', serif; font-size: 14px;
+    color: var(--accent); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pedido-row {
+    display: flex; justify-content: space-between;
+    padding: 5px 0; border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+  .pedido-row:last-of-type { border: none; font-weight: 500; color: var(--accent); }
+  .pedido-actions { display: flex; gap: 8px; margin-top: 10px; }
+  .p-btn {
+    flex: 1; padding: 8px; font-size: 12px; border-radius: 8px;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--muted); transition: all .15s;
+  }
+  .p-btn:hover { background: var(--warm); }
+  .p-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .p-btn.primary:hover { background: var(--accent-dark); }
+ 
+  .lead-form-bubble {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px;
+    align-self: flex-start; max-width: 90%; font-size: 12px;
+  }
+  .lead-form-bubble p { font-weight: 500; color: var(--text); margin-bottom: 10px; font-size: 13px; }
+  .lead-form-bubble input, .lead-form-bubble select {
+    width: 100%; padding: 8px 10px; font-size: 12px;
+    border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 7px; font-family: 'DM Sans', sans-serif;
+    background: var(--cream); color: var(--text);
+  }
+  .lead-form-bubble input:focus, .lead-form-bubble select:focus { outline: none; border-color: var(--accent); }
+ 
+  .quick-chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 8px 20px 0;
+  }
+  .chip {
+    font-size: 12px; padding: 6px 12px;
+    border: 1px solid var(--border); border-radius: 99px;
+    background: var(--white); color: var(--muted);
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all .15s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); background: #fdf5f5; }
+ 
+  .chat-input-area {
+    padding: 14px 16px; border-top: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: center;
+    background: var(--white);
+  }
+  .chat-input {
+    flex: 1; padding: 10px 14px; font-size: 13px;
+    border: 1px solid var(--border); border-radius: 99px;
+    font-family: 'DM Sans', sans-serif; background: var(--cream);
+    color: var(--text); outline: none;
+    transition: border-color .2s;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+  .send-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--accent); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 15px; flex-shrink: 0;
+    transition: background .2s;
+  }
+  .send-btn:hover { background: var(--accent-dark); }
+ 
+  /* NOTIF PANEL - simula el WhatsApp de la dueña */
+  .owner-panel {
+    background: var(--text); color: #fff;
+    border-radius: 12px; margin: 32px 40px;
+    overflow: hidden;
+  }
+  .owner-header {
+    padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.1);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .owner-header-icon {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--green); display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .owner-header p { font-size: 13px; font-weight: 500; }
+  .owner-header span { font-size: 11px; color: rgba(255,255,255,.5); }
+  .owner-body { padding: 16px 18px; }
+  .wa-bubble {
+    background: #1f5c3a; border-radius: 4px 12px 12px 12px;
+    padding: 10px 14px; font-size: 12px; line-height: 1.6;
+    max-width: 90%; white-space: pre-wrap; color: #e8f5e9;
+    display: none;
+  }
+  .wa-bubble.visible { display: block; }
+  .wa-time { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 8px; text-align: right; }
+  .owner-note { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 12px; text-align: center; }
+ 
+  /* FOOTER */
+  footer {
+    background: var(--text); color: rgba(255,255,255,.5);
+    padding: 24px 40px; font-size: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  footer strong { color: #fff; font-family: 'Playfair Display', serif; }
+  .footer-badge { font-size: 11px; background: rgba(255,255,255,.08); padding: 4px 10px; border-radius: 99px; }
+ 
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .main { grid-template-columns: 1fr; }
+    .chat-panel { height: 600px; position: relative; top: 0; }
+    .catalog-grid { grid-template-columns: 1fr; }
+    .features-bar { flex-direction: column; gap: 12px; }
+    nav { padding: 12px 16px; }
+    .catalog { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+ 
+<nav>
+  <div class="nav-logo"><div class="dot"></div> Carnes Frescas Doña Rosa</div>
+  <div class="nav-links">
+    <a href="#catalogo">Productos</a>
+    <a href="#como">¿Cómo funciona?</a>
+  </div>
+  <span class="nav-badge">✦ Pedidos abiertos hoy</span>
+</nav>
+ 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Pollos · Pavos · Patos · Lima</div>
+    <h1 class="hero-title">Carnes frescas al<br><span>mejor precio</span>,<br>directo a tu puerta</h1>
+    <p class="hero-sub">Venta al por menor y mayor. Sin intermediarios, sin llamadas perdidas. Haz tu pedido aquí y te lo confirmamos al instante por WhatsApp.</p>
+    <a href="#chat" class="hero-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Hacer mi pedido ahora
+    </a>
+  </div>
+  <div class="hero-right">
+    <p class="hero-right-title">Precios de hoy</p>
+    <div class="producto-card">
+      <div><div class="prod-name">Pollo entero</div><div class="prod-unit">Por kg · Mín. 1 kg</div></div>
+      <div><div class="prod-price">S/ 8.50/kg</div><div class="prod-badge">Mayor desde 10 kg</div></div>
+    </div>
+    <div class="producto-card">
+      <div><div class="prod-name">Pechuga de pollo</div><div class="prod-unit">Por kg · Sin hueso</div></div>
+      <div><div class="prod-price">S/ 12.00/kg</div><div class="prod-badge">Mayor desde 5 kg</div></div>
+    </div>
+    <div class="producto-card">
+      <div><div class="prod-name">Pierna con encuentro</div><div class="prod-unit">Por kg · Con hueso</div></div>
+      <div><div class="prod-price">S/ 9.00/kg</div><div class="prod-badge">Mayor desde 8 kg</div></div>
+    </div>
+    <div class="producto-card">
+      <div><div class="prod-name">Menudencias</div><div class="prod-unit">Corazón, hígado, molleja</div></div>
+      <div><div class="prod-price">S/ 5.00/kg</div><div class="prod-badge">Menor y mayor</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- FEATURES -->
+<div class="features-bar">
+  <div class="feature">
+    <span class="feature-icon">🕐</span>
+    <div class="feature-text"><p>Pedidos 24/7</p><span>El asistente nunca duerme</span></div>
+  </div>
+  <div class="feature">
+    <span class="feature-icon">📲</span>
+    <div class="feature-text"><p>Confirmación por WhatsApp</p><span>Rosa recibe el pedido ordenado</span></div>
+  </div>
+  <div class="feature">
+    <span class="feature-icon">🚚</span>
+    <div class="feature-text"><p>Delivery o recojo</p><span>Coordinas directo con Rosa</span></div>
+  </div>
+  <div class="feature">
+    <span class="feature-icon">💳</span>
+    <div class="feature-text"><p>Pago con Yape / Plin</p><span>O efectivo en entrega</span></div>
+  </div>
+</div>
+ 
+<!-- MAIN: CATALOG + CHAT -->
+<div class="main" id="chat">
+  <!-- CATALOGO -->
+  <div class="catalog" id="catalogo">
+    <h2 class="section-title">Nuestros productos</h2>
+    <p class="section-sub">Selecciona un producto para iniciar tu pedido en el chat</p>
+    <div class="catalog-grid">
+      <div class="cat-card" onclick="initProduct('Pollo entero','S/ 8.50/kg','mínimo 1 kg','menor y mayor')">
+        <span class="cat-type type-ambos">Menor y Mayor</span>
+        <div class="cat-emoji">🐔</div>
+        <div class="cat-name">Pollo entero</div>
+        <div class="cat-price">S/ 8.50 / kg</div>
+        <div class="cat-desc">Fresco del día. Al por mayor desde 10 kg con precio especial.</div>
+      </div>
+      <div class="cat-card" onclick="initProduct('Pechuga de pollo','S/ 12.00/kg','mínimo 1 kg','sin hueso')">
+        <span class="cat-type type-menor">Al por menor</span>
+        <div class="cat-emoji">🍗</div>
+        <div class="cat-name">Pechuga sin hueso</div>
+        <div class="cat-price">S/ 12.00 / kg</div>
+        <div class="cat-desc">Ideal para restaurantes y cocinas. Sin hueso, lista para cocinar.</div>
+      </div>
+      <div class="cat-card" onclick="initProduct('Pierna con encuentro','S/ 9.00/kg','mínimo 2 kg','con hueso')">
+        <span class="cat-type type-ambos">Menor y Mayor</span>
+        <div class="cat-emoji">🍖</div>
+        <div class="cat-name">Pierna con encuentro</div>
+        <div class="cat-price">S/ 9.00 / kg</div>
+        <div class="cat-desc">Con hueso. Pedido mínimo 2 kg para pedidos al detalle.</div>
+      </div>
+      <div class="cat-card" onclick="initProduct('Menudencias','S/ 5.00/kg','mínimo 1 kg','corazón, hígado, molleja')">
+        <span class="cat-type type-mayor">Al por mayor</span>
+        <div class="cat-emoji">🫀</div>
+        <div class="cat-name">Menudencias</div>
+        <div class="cat-price">S/ 5.00 / kg</div>
+        <div class="cat-desc">Corazón, hígado y molleja. Muy solicitado por restaurantes.</div>
+      </div>
+      <div class="cat-card" onclick="initProduct('Pato entero','S/ 14.00/kg','mínimo 1 unidad','por unidad o kg')">
+        <span class="cat-type type-ambos">Menor y Mayor</span>
+        <div class="cat-emoji">🦆</div>
+        <div class="cat-name">Pato entero</div>
+        <div class="cat-price">S/ 14.00 / kg</div>
+        <div class="cat-desc">Por unidad (aprox. 2–3 kg) o por kg. Previo pedido de 48h.</div>
+      </div>
+      <div class="cat-card" onclick="initProduct('Cuy','S/ 22.00/unidad','mínimo 1 unidad','por unidad')">
+        <span class="cat-type type-ambos">Menor y Mayor</span>
+        <div class="cat-emoji">🐹</div>
+        <div class="cat-name">Cuy</div>
+        <div class="cat-price">S/ 22.00 / unidad</div>
+        <div class="cat-desc">Limpio y listo. Precio especial al por mayor desde 5 unidades.</div>
+      </div>
+    </div>
+ 
+    <!-- COMO FUNCIONA -->
+    <div class="how-section" id="como">
+      <h2 class="section-title">¿Cómo hago mi pedido?</h2>
+      <p class="section-sub">En menos de 3 minutos tienes tu pedido confirmado</p>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">1</div>
+          <div class="step-text"><p>Dile al asistente qué producto quieres</p><span>Escribe o haz clic en un producto del catálogo para que el asistente lo tome</span></div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">2</div>
+          <div class="step-text"><p>Confirma la cantidad y tipo de entrega</p><span>El asistente calcula el total y te muestra el resumen antes de confirmar</span></div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">3</div>
+          <div class="step-text"><p>Deja tus datos y listo</p><span>Doña Rosa recibe tu pedido completo por WhatsApp y te confirma en minutos</span></div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- PANEL DUEÑA -->
+    <div class="owner-panel">
+      <div class="owner-header">
+        <div class="owner-header-icon">📲</div>
+        <div><p>Lo que verá Doña Rosa</p><span>Simulación del mensaje que le llega por WhatsApp</span></div>
+      </div>
+      <div class="owner-body">
+        <div class="wa-bubble" id="wa-msg">
+          (Aquí aparecerá el pedido completo cuando hagas uno)
+        </div>
+        <p class="owner-note" id="owner-note">Completa un pedido en el chat para ver la vista de Doña Rosa →</p>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- CHAT PANEL -->
+  <div class="chat-panel">
+    <div class="chat-header">
+      <div class="chat-avatar">R</div>
+      <div class="chat-info">
+        <p>Asistente de Doña Rosa</p>
+        <span>En línea ahora</span>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-msgs"></div>
+    <div class="quick-chips" id="quick-chips"></div>
+    <div class="chat-input-area">
+      <input class="chat-input" id="chat-input" placeholder="Escribe tu consulta o pedido..." onkeydown="if(event.key==='Enter')sendMsg()">
+      <button class="send-btn" onclick="sendMsg()" aria-label="Enviar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+ 
+<footer>
+  <div><strong>Carnes Frescas Doña Rosa</strong> — Lima, Perú</div>
+  <div>Pedidos: Lun–Sáb 6am–6pm · Dom 6am–12pm</div>
+  <span class="footer-badge">Potenciado por IA ✦</span>
+</footer>
+ 
+<script>
+const PRODUCTOS = {
+  'Pollo entero': { precio: 8.50, unidad: 'kg', min: 1, mayorDesde: 10, precioMayor: 7.50 },
+  'Pechuga de pollo': { precio: 12.00, unidad: 'kg', min: 1, mayorDesde: 5, precioMayor: 10.50 },
+  'Pierna con encuentro': { precio: 9.00, unidad: 'kg', min: 2, mayorDesde: 8, precioMayor: 8.00 },
+  'Menudencias': { precio: 5.00, unidad: 'kg', min: 1, mayorDesde: 5, precioMayor: 4.00 },
+  'Pato entero': { precio: 14.00, unidad: 'kg', min: 1, mayorDesde: 10, precioMayor: 12.00 },
+  'Cuy': { precio: 22.00, unidad: 'unidad', min: 1, mayorDesde: 5, precioMayor: 18.00 },
+};
+ 
+const SYSTEM_PROMPT = `Eres el asistente de ventas de "Carnes Frescas Doña Rosa", una microempresa familiar de venta de carnes blancas en Lima, Perú. Tu único trabajo es tomar pedidos de forma amigable, clara y eficiente.
+ 
+PRODUCTOS Y PRECIOS:
+- Pollo entero: S/ 8.50/kg (mayor 10kg+: S/ 7.50/kg)
+- Pechuga sin hueso: S/ 12.00/kg (mayor 5kg+: S/ 10.50/kg)
+- Pierna con encuentro: S/ 9.00/kg (mayor 8kg+: S/ 8.00/kg)
+- Menudencias (corazón/hígado/molleja): S/ 5.00/kg (mayor 5kg+: S/ 4.00/kg)
+- Pato entero: S/ 14.00/kg (mayor 10kg+: S/ 12.00/kg) — requiere pedido 48h antes
+- Cuy limpio: S/ 22.00/unidad (mayor 5 unid+: S/ 18.00/unidad)
+ 
+REGLAS:
+1. Sé amable, breve y directo. Máximo 3 líneas por respuesta.
+2. Si el cliente menciona un producto, confirma el precio y pregunta la cantidad.
+3. Si la cantidad supera el mínimo para mayor, aplica automáticamente el precio mayor e informa al cliente.
+4. Cuando tengas producto + cantidad, muestra el resumen con total y pregunta si desea agregar algo más.
+5. Cuando el cliente confirme el pedido, pide: nombre, número WhatsApp, y si es delivery o recojo.
+6. NUNCA inventes productos ni precios no listados.
+7. Si preguntan algo fuera de pedidos (política, clima, etc.), responde: "Solo puedo ayudarte con pedidos de Doña Rosa 😊"
+8. Usa emojis con moderación. Habla como limeño amigable.
+9. Al final, cuando tengas todos los datos, genera un resumen con este formato exacto:
+---PEDIDO CONFIRMADO---
+Cliente: [nombre]
+WhatsApp: [número]
+Pedido: [producto] x [cantidad] = S/ [total]
+Entrega: [delivery/recojo]
+Total a pagar: S/ [total]
+Pago: [Yape/Plin/Efectivo]
+---FIN PEDIDO---`;
+ 
+let messages = [];
+let currentOrder = { items: [], name: '', phone: '', delivery: '' };
+let awaitingData = false;
+ 
+async function callClaude(userMsg) {
+  messages.push({ role: 'user', content: userMsg });
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: messages
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Lo siento, hubo un error. Escríbeme de nuevo.';
+    messages.push({ role: 'assistant', content: reply });
+    return reply;
+  } catch(e) {
+    return 'Hubo un problema de conexión. Intenta de nuevo en un momento.';
+  }
+}
+ 
+function addBubble(text, type) {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = `bubble ${type}`;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+ 
+function showTyping() {
+  const msgs = document.getElementById('chat-msgs');
+  const div = document.createElement('div');
+  div.className = 'bubble typing';
+  div.id = 'typing-indicator';
+  div.innerHTML = '<div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+ 
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+ 
+function setChips(chips) {
+  const el = document.getElementById('quick-chips');
+  el.innerHTML = chips.map(c =>
+    `<button class="chip" onclick="handleChip('${c}')">${c}</button>`
+  ).join('');
+}
+ 
+function clearChips() {
+  document.getElementById('quick-chips').innerHTML = '';
+}
+ 
+async function handleChip(text) {
+  clearChips();
+  addBubble(text, 'user');
+  showTyping();
+  const reply = await callClaude(text);
+  removeTyping();
+  addBubble(reply, 'bot');
+  checkForOrder(reply);
+  suggestChips(reply);
+}
+ 
+async function sendMsg() {
+  const inp = document.getElementById('chat-input');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  clearChips();
+  addBubble(text, 'user');
+  showTyping();
+  const reply = await callClaude(text);
+  removeTyping();
+  addBubble(reply, 'bot');
+  checkForOrder(reply);
+  suggestChips(reply);
+}
+ 
+function suggestChips(reply) {
+  const low = reply.toLowerCase();
+  if (low.includes('qué deseas') || low.includes('en qué te ayudo') || low.includes('algo más')) {
+    setChips(['🐔 Pollo entero', '🍗 Pechuga', '🍖 Pierna', '🦆 Pato']);
+  } else if (low.includes('delivery') || low.includes('recojo') || low.includes('recoger')) {
+    setChips(['📦 Delivery', '🏪 Recojo en tienda']);
+  } else if (low.includes('pago') || low.includes('yape') || low.includes('plin')) {
+    setChips(['📱 Yape', '📱 Plin', '💵 Efectivo en entrega']);
+  }
+}
+ 
+const DONA_ROSA_PHONE = '51932307878';
+ 
+function checkForOrder(reply) {
+  if (reply.includes('---PEDIDO CONFIRMADO---')) {
+    const wa = buildWhatsApp(reply);
+    showOwnerNotification(wa);
+    // Pequeña pausa y luego abre WhatsApp automáticamente
+    setTimeout(() => sendToWhatsApp(wa), 1800);
+  }
+}
+ 
+function buildWhatsApp(reply) {
+  const lines = reply.split('\n');
+  const orderLines = lines.filter(l =>
+    l.includes('Cliente:') || l.includes('WhatsApp:') || l.includes('Pedido:') ||
+    l.includes('Entrega:') || l.includes('Total') || l.includes('Pago:')
+  ).join('\n');
+  const now = new Date();
+  const time = now.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+  const date = now.toLocaleDateString('es-PE', { weekday: 'long', day: 'numeric', month: 'long' });
+  return `🛒 *NUEVO PEDIDO — ${time}*\n📅 ${date}\n\n${orderLines}\n\n_Pedido recibido vía página web_\n✅ _Por favor confirmar al cliente_`;
+}
+ 
+function sendToWhatsApp(msg) {
+  const encoded = encodeURIComponent(msg);
+  const url = `https://wa.me/${DONA_ROSA_PHONE}?text=${encoded}`;
+  window.open(url, '_blank');
+}
+ 
+function showOwnerNotification(msg) {
+  const el = document.getElementById('wa-msg');
+  const note = document.getElementById('owner-note');
+  el.textContent = msg;
+  el.classList.add('visible');
+  if (note) note.remove();
+ 
+  // Agrega botón de reenviar por si el cliente cierra el popup de WhatsApp
+  const existingBtn = document.getElementById('wa-send-btn');
+  if (!existingBtn) {
+    const btn = document.createElement('button');
+    btn.id = 'wa-send-btn';
+    btn.innerHTML = '📲 Enviar a Doña Rosa por WhatsApp';
+    btn.style.cssText = `
+      display:block; width:100%; margin-top:14px;
+      background:#25D366; color:#fff; border:none;
+      padding:11px 16px; border-radius:8px; font-size:13px;
+      font-family:'DM Sans',sans-serif; font-weight:500;
+      cursor:pointer; transition:opacity .2s;
+    `;
+    btn.onmouseover = () => btn.style.opacity = '.85';
+    btn.onmouseout  = () => btn.style.opacity = '1';
+    btn.onclick = () => sendToWhatsApp(msg);
+    el.parentElement.appendChild(btn);
+  }
+ 
+  // Muestra confirmación en el chat también
+  setTimeout(() => {
+    addBubble('✅ ¡Pedido registrado! Le hemos enviado el resumen a Doña Rosa por WhatsApp. Ella te confirmará en breve al número que indicaste. ¡Gracias por tu compra! 🐔', 'bot');
+    setChips(['Hacer otro pedido', '¿Cuánto demora el delivery?', '¿Aceptan Yape?']);
+  }, 400);
+ 
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+ 
+function initProduct(nombre, precio, minimo, detalle) {
+  const text = `Quiero ${nombre} (${precio}, ${detalle})`;
+  clearChips();
+  addBubble(text, 'user');
+  showTyping();
+  callClaude(text).then(reply => {
+    removeTyping();
+    addBubble(reply, 'bot');
+    suggestChips(reply);
+  });
+}
+ 
+async function initChat() {
+  showTyping();
+  await new Promise(r => setTimeout(r, 800));
+  removeTyping();
+  addBubble('¡Hola! Soy el asistente de Doña Rosa 🐔\n\nPuedo tomarte tu pedido de carnes frescas al instante. Tenemos pollo, pato, cuy y menudencias — al por menor y mayor.\n\n¿Qué deseas pedir hoy?', 'bot');
+  messages.push({ role: 'assistant', content: '¡Hola! Soy el asistente de Doña Rosa 🐔\n\nPuedo tomarte tu pedido de carnes frescas al instante. Tenemos pollo, pato, cuy y menudencias — al por menor y mayor.\n\n¿Qué deseas pedir hoy?' });
+  setChips(['🐔 Pollo entero', '🍗 Pechuga sin hueso', '🍖 Pierna con encuentro', '🦆 Pato entero']);
+}
+ 
+initChat();
+</script>
+</body>
+</html>
