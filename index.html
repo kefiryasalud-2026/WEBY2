@@ -94,7 +94,7 @@
             
             <!-- Logo Avícola Yamiless -->
             <a href="#" class="flex items-center gap-3 group">
-                <div class="relative w-14 h-14 rounded-full overflow-hidden border-2 border-brandGold bg-white flex items-center justify-center transition-transform duration-500 group-hover:scale-105 shadow-md">
+                <div class="relative w-14 h-14 rounded-full overflow-hidden border-2 border-brandGold bg-white flex items-center justify-center transition-transform duration-500 group-hover:scale-105 shadow-md flex-shrink-0">
                      <img src="Logo%20Av%C3%ADcola%20Yamiless.png" alt="Logo Avícola Yamiless"  class="w-full h-full object-cover">
                 </div>
                 <div>
@@ -177,10 +177,13 @@
             </div>
 
             <!-- Tarjeta Interactiva del Logo y Producto Hero -->
-            <div class="lg:col-span-5 flex justify-center">
+            <div class="lg:col-span-5 flex justify-center" mt-8 lg:mt-0">
                 <div class="relative bg-gradient-to-b from-stone-900 to-stone-900/90 border border-brandGold/30 p-8 rounded-lg shadow-2xl max-w-sm w-full text-center">
-                    <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full overflow-hidden border-4 border-brandGold bg-white shadow-xl">
-                        <img src="Logo Avícola Yamiless.png" alt="Logo Avícola Yamiless" class="w-full h-full object-cover">
+                    <!-- Contenedor del Logo Ampliado a w-28 h-28 y -top-14 -->
+                    <div class="absolute -top-14 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden border-4 border-brandGold bg-white flex items-center justify-center shadow-xl">
+                        <!-- Respaldo tipográfico de lujo -->
+                        <span class="absolute text-brandGold font-cormorant text-4xl font-bold">Y</span>
+                        <img src="Logo%20Av%C3%ADcola%20Yamiless.png" alt="Logo Avícola Yamiless" class="absolute inset-0 w-full h-full object-contain p-1 z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
                     </div>
                     <span class="block text-[10px] uppercase tracking-[0.3em] text-brandGold font-bold mt-10">Producto Sugerido</span>
                     <h3 class="title-editorial text-3xl font-light text-white mt-2">Pollo Entero Especial</h3>
