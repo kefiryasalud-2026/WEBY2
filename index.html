@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avícola Yamiless | Distribución y Carnes de Alta Gama</title>
+    <title>Avícola Yamiless | Distribución y Carnes de Alta Calidad</title>
     
     <!-- Tailwind CSS (URL Corregida) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -94,8 +94,8 @@
             
             <!-- Logo Avícola Yamiless -->
             <a href="#" class="flex items-center gap-3 group">
-                <div class="relative w-14 h-14 rounded-full overflow-hidden border-2 border-brandGold bg-white flex items-center justify-center transition-transform duration-500 group-hover:scale-105 shadow-md flex-shrink-0">
-                     <img src="Logo%20Av%C3%ADcola%20Yamiless.png" alt="Logo Avícola Yamiless"  class="w-full h-full object-cover">
+                <div class="relative w-16 h-16 rounded-full overflow-hidden border-2 border-brandGold bg-white flex items-center justify-center transition-transform duration-500 group-hover:scale-105 shadow-md flex-shrink-0">
+                     <img src="Logo%20Av%C3%ADcola%20Yamiless.png" alt="Logo Avícola Yamiless"  class="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
                 </div>
                 <div>
                     <span class="block text-[9px] uppercase tracking-[0.3em] text-brandRed font-bold">Distribuidor Autorizado</span>
@@ -179,8 +179,8 @@
             <!-- Tarjeta Interactiva del Logo y Producto Hero -->
            <div class="lg:col-span-5 flex justify-center mt-8 lg:mt-0">
                 <div class="relative bg-gradient-to-b from-stone-900 to-stone-900/90 border border-brandGold/30 p-8 rounded-lg shadow-2xl max-w-sm w-full text-center">
-                    <!-- Contenedor del Logo Ampliado a w-28 h-28 y -top-14 -->
-                    <div class="absolute -top-14 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full overflow-hidden border-4 border-brandGold bg-white flex items-center justify-center shadow-xl">
+                    <!-- Contenedor del Logo Ampliado a w-32 h-32 y -top-16 con ajuste object-cover para llenado perfecto -->
+                    <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full overflow-hidden border-4 border-brandGold bg-white flex items-center justify-center shadow-xl">
                         <!-- Respaldo tipográfico de lujo -->
                         <span class="absolute text-brandGold font-cormorant text-4xl font-bold">Y</span>
                         <img src="Logo%20Av%C3%ADcola%20Yamiless.png" alt="Logo Avícola Yamiless" class="absolute inset-0 w-full h-full object-contain p-1 z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
@@ -417,7 +417,7 @@
     </footer>
 
 
-    <!-- WIDGET DEL CONSERJE INTELIGENTE: YAMI-CHAT -->
+     <!-- WIDGET DEL asistente INTELIGENTE: YAMI-CHAT -->
     <div id="yami-chat-widget" class="fixed bottom-6 right-6 z-50 font-manrope">
         
         <!-- Botón de Apertura de Chat -->
@@ -436,11 +436,13 @@
             <!-- Cabecera de la ventana de chat -->
             <div class="bg-brandDark p-4 flex items-center justify-between border-b border-brandGold/30">
                 <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-full overflow-hidden bg-white border border-brandGold">
-                        <img src="Logo Avícola Yamiless.png" alt="Logo Avícola Yamiless" class="w-full h-full object-cover">
+                    <div class="w-12 h-12 rounded-full overflow-hidden bg-white border border-brandGold flex items-center justify-center flex-shrink-0 relative">
+                        <span class="absolute text-brandGold font-cormorant text-sm font-bold">Y</span>
+                        <img src="Logo%20Av%C3%ADcola%20Yamiless.png" alt="Logo Avícola Yamiless" class="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
                     </div>
                     <div>
-                        <h4 class="text-xs uppercase tracking-widest text-white font-bold">Conserjería Yamiless</h4>
+                        <!-- Modificado a "Venta Online - Yamiless" -->
+                        <h4 class="text-xs uppercase tracking-widest text-white font-bold">Venta Online - Yamiless</h4>
                         <span class="text-[9px] text-brandGold font-light block">Asistente de Pedidos Activo</span>
                     </div>
                 </div>
@@ -459,10 +461,10 @@
                 <!-- Se inyectan dinámicamente -->
             </div>
 
-            <!-- Entrada de Texto de Cantidades (Solo numérica) -->
+            <!-- Entrada de Texto de Cantidades y Datos de Cliente (Solo numérica o libre según el paso) -->
             <div id="chat-input-panel" class="hidden p-3 bg-white border-t border-stone-100 items-center gap-2">
-                <input type="number" id="quantity-input" min="1" placeholder="Ej. 3" class="flex-1 px-3 py-2 border border-stone-200 text-xs focus:outline-none focus:ring-1 focus:ring-brandRed" />
-                <button onclick="submitQuantity()" class="px-4 py-2 bg-brandRed hover:bg-brandDark text-white text-[10px] uppercase tracking-wider font-bold transition-all">
+                <input type="text" id="quantity-input" placeholder="Ej. 3" class="flex-1 px-3 py-2 border border-stone-200 text-xs focus:outline-none focus:ring-1 focus:ring-brandRed" onkeydown="if(event.key==='Enter') submitTextInput()" />
+                <button onclick="submitTextInput()" class="px-4 py-2 bg-brandRed hover:bg-brandDark text-white text-[10px] uppercase tracking-wider font-bold transition-all">
                     Confirmar
                 </button>
             </div>
@@ -490,7 +492,9 @@
             price: 0,
             quantity: 0,
             deliveryType: '',  // delivery, recojo
-            step: 'init'       // init, select_subproduct, select_quantity, select_delivery, final
+            clientName: '',    // Nombre del cliente
+            clientPhone: '',   // Teléfono del cliente
+            step: 'init'       // init, select_subproduct, select_quantity, select_delivery, ask_name, ask_phone, final
         };
 
         // Precios Oficiales Solicitados por el Cliente
@@ -539,10 +543,13 @@
                 price: 0,
                 quantity: 0,
                 deliveryType: '',
+                clientName: '',
+                clientPhone: '',
                 step: 'init'
             };
 
-            addBotMessage("Bienvenido a la <strong>Conserjería de Venta Directa</strong> de Avícola Yamiless.");
+            // Modificado: "Conserjería" cambiado por "Venta Online - Yamiless"
+            addBotMessage("Bienvenido a la <strong>Venta Online - Yamiless</strong>.");
             addBotMessage("Seleccionamos y distribuimos proteínas de altísima gama directo a su hogar.");
             addBotMessage("Por favor, elija el tipo de carne premium que desea ordenar hoy:");
             
@@ -560,8 +567,9 @@
             container.className = "flex items-start gap-2.5 max-w-[85%] animate-fade-in";
             
             container.innerHTML = `
-                <div class="w-7 h-7 rounded-full overflow-hidden border border-brandGold flex-shrink-0 bg-white">
-                    <img src="Logo Avícola Yamiless.png" alt="Yamiless Logo" class="w-full h-full object-cover">
+                <div class="w-7 h-7 rounded-full overflow-hidden border border-brandGold flex-shrink-0 bg-white flex items-center justify-center relative">
+                    <span class="absolute text-brandGold font-cormorant text-[10px] font-bold">Y</span>
+                    <img src="Logo%20Av%C3%ADcola%20Yamiless.png" alt="Yamiless Logo" class="absolute inset-0 w-full h-full object-cover z-10 transition-opacity duration-300" onerror="this.style.opacity='0'">
                 </div>
                 <div class="bg-white border border-stone-200 p-3 text-xs text-stone-700 leading-relaxed rounded-r-lg rounded-bl-lg shadow-sm">
                     ${htmlContent}
@@ -630,21 +638,21 @@
                     orderState.step = 'select_quantity';
                     addBotMessage("Seleccionó Cuy Gourmet de Primera. El precio por unidad es de <strong>S/. 50.00</strong>.");
                     addBotMessage("Ingrese el número de unidades que requiere para su pedido:");
-                    showQuantityInput("Unidades de Cuy (Ej. 2)");
+                    showTextInput("Unidades de Cuy (Ej. 2)", "number");
                 } else if (val === 'Pato') {
                     orderState.product = 'pato';
                     orderState.price = prices.pato;
                     orderState.step = 'select_quantity';
                     addBotMessage("Seleccionó Pato Fino de Corral. El precio por kilo es de <strong>S/. 20.00</strong>.");
                     addBotMessage("Ingrese el número de kilos que requiere:");
-                    showQuantityInput("Kilos de Pato (Ej. 4)");
+                    showTextInput("Kilos de Pato (Ej. 4)", "number");
                 } else if (val === 'Chancho') {
                     orderState.product = 'chancho';
                     orderState.price = prices.chancho;
                     orderState.step = 'select_quantity';
                     addBotMessage("Seleccionó nuestro Enrollado de Chancho Premium. El precio por kilo es de <strong>S/. 18.00</strong>.");
                     addBotMessage("Ingrese el número de kilos que requiere:");
-                    showQuantityInput("Kilos de Enrollado (Ej. 3)");
+                    showTextInput("Kilos de Enrollado (Ej. 3)", "number");
                 }
                 return;
             }
@@ -671,7 +679,7 @@
                 orderState.step = 'select_quantity';
                 addBotMessage(`El costo de este corte es de <strong>S/. ${orderState.price}.00 por kilo</strong>.`);
                 addBotMessage("Indique cuántos kilos desea solicitar para este pedido:");
-                showQuantityInput("Kilos de Pollo (Ej. 5)");
+                showTextInput("Kilos de Pollo (Ej. 5)", "number");
                 return;
             }
 
@@ -683,19 +691,10 @@
                     orderState.deliveryType = 'Recojo en la Tienda (Avícola Yamiless)';
                 }
 
-                orderState.step = 'final';
-                
-                // Cálculo total del pedido
-                const total = orderState.price * orderState.quantity;
-                const unidadTexto = (orderState.product === 'cuy') ? 'unidades' : 'kilos';
-
-                addBotMessage(`Perfecto. Hemos registrado su orden de alta gama: <br><br><strong>Resumen de Solicitud:</strong><br>• Producto: ${getFriendlyName()}<br>• Cantidad: ${orderState.quantity} ${unidadTexto}<br>• Precio Unitario: S/. ${orderState.price}.00<br>• Monto Total Estimado: <strong>S/. ${total}.00</strong><br>• Tipo de Entrega: ${orderState.deliveryType}`);
-                addBotMessage("¿Desea enviar y validar estos datos directamente con el dueño por WhatsApp?");
-                
-                showOptions([
-                    { text: "✅ Confirmar y Enviar por WhatsApp", value: "Confirmar Pedido" },
-                    { text: "❌ Recomenzar Pedido", value: "Reiniciar" }
-                ]);
+                // Cambiado: Ahora pasa al flujo de recabar Nombre del Cliente antes del resumen final
+                orderState.step = 'ask_name';
+                addBotMessage("Para registrar su pedido con total precisión, por favor escriba su <strong>Nombre Completo</strong>:");
+                showTextInput("Su nombre y apellido...", "text");
                 return;
             }
 
@@ -710,31 +709,68 @@
             }
         }
 
-        // Mostrar interfaz de entrada de números para la cantidad
-        function showQuantityInput(placeholder) {
+        // Mostrar interfaz de entrada de datos con propiedades dinámicas de input
+        function showTextInput(placeholder, type = "text") {
             chatOptionsPanel.classList.add('hidden');
             chatInputPanel.classList.remove('hidden');
+            quantityInput.type = type;
             quantityInput.placeholder = placeholder;
             quantityInput.value = '';
             quantityInput.focus();
         }
 
-        // Validar y enviar la cantidad ingresada
-        function submitQuantity() {
-            const val = parseInt(quantityInput.value);
-            if (!val || val <= 0) {
+        // Validar y procesar la entrada de texto/número del cliente
+        function submitTextInput() {
+            const val = quantityInput.value.trim();
+            if (!val) {
                 return;
             }
 
-            addUserMessage(`${val} solicitados`);
-            orderState.quantity = val;
-            orderState.step = 'select_delivery';
+            // Caso: Capturar cantidad
+            if (orderState.step === 'select_quantity') {
+                const numVal = parseInt(val);
+                if (!numVal || numVal <= 0) {
+                    alert("Por favor ingrese una cantidad numérica válida.");
+                    return;
+                }
+                addUserMessage(`${numVal} solicitados`);
+                orderState.quantity = numVal;
+                orderState.step = 'select_delivery';
 
-            addBotMessage("Indique cómo desea recibir su pedido para coordinar el despacho seguro:");
-            showOptions([
-                { text: "🛵 Solicitar Envío a Casa", value: "Delivery" },
-                { text: "🏪 Recoger en Tienda Física", value: "Recojo" }
-            ]);
+                addBotMessage("Indique cómo desea recibir su pedido para coordinar el despacho seguro:");
+                showOptions([
+                    { text: "🛵 Solicitar Envío a Casa", value: "Delivery" },
+                    { text: "🏪 Recoger en Tienda Física", value: "Recojo" }
+                ]);
+            } 
+            // Caso: Capturar Nombre del Cliente
+            else if (orderState.step === 'ask_name') {
+                addUserMessage(val);
+                orderState.clientName = val;
+                orderState.step = 'ask_phone';
+
+                addBotMessage(`Estimado(a) <strong>${val}</strong>, ahora ingrese su <strong>Número de Teléfono / Celular</strong> para contactarlo:`);
+                showTextInput("Ej. 999888777", "tel");
+            } 
+            // Caso: Capturar Teléfono del Cliente y preparar Resumen Final
+            else if (orderState.step === 'ask_phone') {
+                addUserMessage(val);
+                orderState.clientPhone = val;
+                orderState.step = 'final';
+
+                // Cálculo total del pedido
+                const total = orderState.price * orderState.quantity;
+                const unidadTexto = (orderState.product === 'cuy') ? 'unidades' : 'kilos';
+
+                addBotMessage(`Perfecto, <strong>${orderState.clientName}</strong>. Hemos registrado su orden en nuestro sistema de venta directa.`);
+                addBotMessage(`<strong>Resumen del Pedido:</strong><br><br>• 👤 Cliente: ${orderState.clientName}<br>• 📞 Teléfono: ${orderState.clientPhone}<br>• 📦 Producto: ${getFriendlyName()}<br>• ⚖️ Cantidad: ${orderState.quantity} ${unidadTexto}<br>• 💵 Precio Unitario: S/. ${orderState.price}.00<br>• 💰 Monto Total Estimado: <strong>S/. ${total}.00</strong><br>• 🛵 Entrega: ${orderState.deliveryType}`);
+                addBotMessage("¿Desea enviar y validar estos datos directamente con el dueño por WhatsApp?");
+                
+                showOptions([
+                    { text: "✅ Confirmar y Enviar por WhatsApp", value: "Confirmar Pedido" },
+                    { text: "❌ Recomenzar Pedido", value: "Reiniciar" }
+                ]);
+            }
         }
 
         // Nombre del producto para mensajes formateados
@@ -754,6 +790,8 @@
             const textPayload = 
 `Hola, acabo de realizar un pedido de alta gama desde su Landing Page Oficial:
 
+👤 Cliente: ${orderState.clientName}
+📞 Teléfono: ${orderState.clientPhone}
 🔸 Producto: ${getFriendlyName()}
 🔸 Cantidad: ${orderState.quantity} ${unidadTexto}
 🔸 Precio Unitario: S/. ${orderState.price}.00
@@ -770,10 +808,15 @@ Por favor, confirmar disponibilidad y la hora del despacho bajo estándares de s
             
             addBotMessage("¡Su pedido se ha enviado con éxito al WhatsApp de la administración (947332462)!");
             
+            // Modificación: Mensaje de agradecimiento interactivo y despedida amable
+            setTimeout(() => {
+                addBotMessage(`<strong>¡Muchas gracias por su preferencia, ${orderState.clientName}!</strong><br>Su solicitud ya está en proceso de atención. ¡Que tenga un excelente día y vuelva pronto! 🐔✨`);
+            }, 1200);
+
             // Volver a iniciar el chat para futuras compras
             setTimeout(() => {
                 startChat();
-            }, 6000);
+            }, 8000);
         }
     </script>
 </body>
